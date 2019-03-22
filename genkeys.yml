@@ -1,7 +1,16 @@
 - name: Genkeys & getkeys from remote servers
   hosts: wg-servers
-  connection: local
+  connection: ssh
 
-- tasks:
-   name: genkey private & public
-   command: mkdir /etc/wireguard
+  tasks:
+  - name: Make directiry for keys
+    file:
+     path: /root/wg-keys
+     mode: 0700
+     state: directory
+
+  - name: Generation private key for WireGuard
+    raw: "wg genkey > /root/wg-keys/private.key"
+
+  - name: Generation public key -//-
+    raw: "wg pubkey < /root/wg-keys/private.key > /root/wg-keys/public.key"
