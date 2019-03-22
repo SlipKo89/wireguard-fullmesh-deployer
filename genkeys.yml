@@ -1,5 +1,7 @@
-name: Genkeys & getkeys from remote servers
-hosts: wg-servers
-connection: local
+- name: Genkeys & getkeys from remote servers
+  hosts: wg-servers
+  connection: local
 
-tasks:
+- tasks:
+   name: genkey private & public
+   command: mkdir /etc/wireguard
