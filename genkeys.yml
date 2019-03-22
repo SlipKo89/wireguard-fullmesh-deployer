@@ -1,0 +1,5 @@
+name: Genkeys & getkeys from remote servers
+hosts: wg-servers
+connection: local
+
+tasks:
