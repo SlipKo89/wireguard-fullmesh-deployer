@@ -25,3 +25,9 @@
   - name: Calculation HASH sums
     raw: 'sha256sum /root/wg-keys/*.key > /root/wg-keys/sha256sum-keys'
     when: sha256sum.stat.exists == false
+
+  - name: Fetch private key
+    fetch: src=/root/wg-keys/private.key dest=keys/{{inventory_hostname}}/private.key flat=yes
+
+  - name: Fetch public key
+    fetch: src=/root/wg-keys/public.key dest=keys/{{inventory_hostname}}/public.key flat=yes

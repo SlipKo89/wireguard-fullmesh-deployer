@@ -1,0 +1,7 @@
+- name: Push configs on remote hosts
+  hosts: wg-servers
+  connection: ssh
+
+  tasks:
+  - name: Copy configs to remote hosts
+    copy: src=keys/{{inventory_hostname}}/wg0.conf dest=/etc/wireguard/
