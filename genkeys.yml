@@ -9,8 +9,19 @@
      mode: 0700
      state: directory
 
+  - name: Check exists sha256sum
+    stat:
+     path: /root/wg-keys/sha256sum-keys
+    register: sha256sum
+
   - name: Generation private key for WireGuard
-    raw: "wg genkey > /root/wg-keys/private.key"
+    raw: 'wg genkey > /root/wg-keys/private.key'
+    when: sha256sum.stat.exists == false
 
   - name: Generation public key -//-
-    raw: "wg pubkey < /root/wg-keys/private.key > /root/wg-keys/public.key"
+    raw: 'wg pubkey < /root/wg-keys/private.key > /root/wg-keys/public.key'
+    when: sha256sum.stat.exists == false
+
+  - name: Calculation HASH sums
+    raw: 'sha256sum /root/wg-keys/*.key > /root/wg-keys/sha256sum-keys'
+    when: sha256sum.stat.exists == false
